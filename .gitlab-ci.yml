@@ -1,0 +1,40 @@
+stages:
+  - build
+  - package
+
+# ── Build React viewer + compile extension host ──
+build:
+  stage: build
+  image: node:18-alpine
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - media/viewer.js
+      - dist/extension.js
+    expire_in: 1 hour
+
+# ── Package into .vsix ──
+package:
+  stage: package
+  image: node:18-alpine
+  dependencies:
+    - build
+  script:
+    - npm ci
+    - npx vsce package --no-dependencies -o diff_tool.vsix
+  artifacts:
+    name: "diff_tool-${CI_COMMIT_SHORT_SHA}"
+    paths:
+      - diff_tool.vsix
+    # Keep vsix for 30 days so you can download and upload to GitLab admin
+    expire_in: 30 days
+  rules:
+    # Only package on main branch or version tags
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
