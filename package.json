@@ -1,0 +1,74 @@
+{
+  "name": "plc-ladder-viewer",
+  "displayName": "PLC Ladder Viewer",
+  "description": "Renders Rockwell Allen-Bradley .l5x files as visual ladder logic inside GitLab Web IDE",
+  "version": "0.1.0",
+  "publisher": "your-org",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Other"],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "plc.ladderViewer",
+        "displayName": "Ladder Logic Viewer",
+        "selector": [
+          { "filenamePattern": "*.l5x" },
+          { "filenamePattern": "*.L5X" }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "plc.openLadderViewer",
+        "title": "Open as Ladder Logic",
+        "icon": "$(circuit-board)"
+      },
+      {
+        "command": "plc.openLadderDiff",
+        "title": "Ladder Logic Diff (select two commits)",
+        "icon": "$(diff)"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "plc.openLadderViewer",
+          "when": "resourceExtname =~ /\\.l5x$/i",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "plc.openLadderViewer",
+          "when": "resourceExtname =~ /\\.l5x$/i",
+          "group": "navigation"
+        },
+        {
+          "command": "plc.openLadderDiff",
+          "when": "resourceExtname =~ /\\.l5x$/i",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "vite build && tsc -p tsconfig.extension.json",
+    "dev": "vite build --watch",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "@vscode/vsce": "^2.0.0"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
