@@ -5,7 +5,7 @@ stages:
 # ── Build React viewer + compile extension host ──
 build:
   stage: build
-  image: node:18-alpine
+  image: node:20-alpine
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
@@ -22,7 +22,7 @@ build:
 # ── Package into .vsix ──
 package:
   stage: package
-  image: node:18-alpine
+  image: node:20-alpine
   dependencies:
     - build
   script:
