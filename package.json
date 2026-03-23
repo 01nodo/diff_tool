@@ -1,5 +1,5 @@
 {
-  "name": "plc-ladder-viewer",
+  "name": "PVCr",
   "displayName": "PLC Ladder Viewer",
   "description": "Renders Rockwell Allen-Bradley .l5x files as visual ladder logic inside GitLab Web IDE",
   "version": "0.1.0",
