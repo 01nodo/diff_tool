@@ -11,7 +11,7 @@ build:
     paths:
       - node_modules/
   script:
-    - npm ci
+    - npm install
     - npm run build
   artifacts:
     paths:
@@ -26,12 +26,12 @@ package:
   dependencies:
     - build
   script:
-    - npm ci
-    - npx vsce package --no-dependencies -o diff_tool.vsix
+    - npm install
+    - npx vsce package --no-dependencies -o PVC.vsix
   artifacts:
-    name: "diff_tool-${CI_COMMIT_SHORT_SHA}"
+    name: "PVC-${CI_COMMIT_SHORT_SHA}"
     paths:
-      - diff_tool.vsix
+      - PVC.vsix
     # Keep vsix for 30 days so you can download and upload to GitLab admin
     expire_in: 30 days
   rules:
